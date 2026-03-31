@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>March KPI · Khetho Mngomezulu · Brandscapers Africa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+
+:root {
+  --abyss:       #020c16;
+  --navy-00:     #040f1e;
+  --navy-10:     #061526;
+  --navy-20:     #0a1f38;
+  --navy-30:     #0f2d50;
+  --navy-40:     #164068;
+  --cobalt:      #1a5898;
+  --azure:       #2272cc;
+  --sky:         #3a9ae8;
+  --cerulean:    #5ab5f0;
+  --white:       #ffffff;
+  --snow:        #f8faff;
+  --frost:       #eaf2ff;
+  --ice:         #d6eaff;
+  --mist:        #b8d4f0;
+  --silver:      #96b4d0;
+  --grey-light:  #7a96b2;
+  --grey-mid:    #5c7a96;
+  --grey-dark:   #3d5a78;
+  --g-fill:      rgba(10, 31, 56, 0.52);
+  --g-fill-2:    rgba(6, 21, 38, 0.68);
+  --g-fill-3:    rgba(22, 64, 104, 0.30);
+  --g-border:    rgba(182, 212, 240, 0.15);
+  --g-border-h:  rgba(210, 234, 255, 0.45);
+  --g-shine:     rgba(255, 255, 255, 0.06);
+  --glow-blue:   rgba(34, 114, 204, 0.45);
+  --glow-white:  rgba(255, 255, 255, 0.12);
+  --glow-silver: rgba(150, 180, 208, 0.25);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy-00); color: var(--frost); }
+
+#bg-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+.grain {
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.028'/%3E%3C/svg%3E");
+  opacity:.5; mix-blend-mode:overlay;
+}
+
+/* ── INTRO ── */
+#intro {
+  position:fixed; inset:0; z-index:9999;
+  background:var(--abyss);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  transition:opacity 1.8s cubic-bezier(.4,0,.2,1), transform 1.8s cubic-bezier(.4,0,.2,1);
+}
+#intro.gone { opacity:0; transform:scale(1.06); pointer-events:none; }
+#intro-canvas { position:absolute; inset:0; z-index:0; }
+
+.intro-portrait-bg { position:absolute; inset:0; z-index:1; }
+.intro-portrait-img-wrap { position:absolute; inset:0; }
+.intro-portrait-img-wrap img {
+  width:100%; height:100%; object-fit:cover; object-position:center 15%;
+  filter:brightness(.48) saturate(.9) contrast(1.1);
+}
+.intro-veil {
+  position:absolute; inset:0; z-index:2;
+  background:
+    linear-gradient(90deg, var(--abyss) 0%, rgba(4,15,30,.92) 18%, rgba(4,15,30,.58) 45%, rgba(4,15,30,.18) 70%, rgba(4,15,30,.52) 100%),
+    linear-gradient(0deg, rgba(2,12,22,.98) 0%, rgba(2,12,22,.48) 22%, transparent 50%, rgba(2,12,22,.28) 85%, rgba(2,12,22,.7) 100%);
+}
+.intro-slash {
+  position:absolute; z-index:3; top:0; left:35%; width:1px; height:100%;
+  background:linear-gradient(180deg, transparent 0%, rgba(182,212,240,.12) 20%, rgba(255,255,255,.18) 50%, rgba(182,212,240,.12) 80%, transparent 100%);
+  transform:skewX(-8deg);
+}
+.intro-right-glow {
+  position:absolute; z-index:4; right:0; top:0; bottom:0; width:40vw;
+  background:linear-gradient(90deg, transparent 0%, rgba(34,114,204,.05) 40%, rgba(90,181,240,.08) 100%);
+  pointer-events:none;
+}
+.intro-corner {
+  position:absolute; z-index:6; width:60px; height:60px;
+  border-color:rgba(182,212,240,.25); border-style:solid;
+  opacity:0; animation:introUp .8s ease 2.2s forwards;
+}
+.ic-tl { top:1.5rem; left:1.5rem; border-width:1px 0 0 1px; }
+.ic-tr { top:1.5rem; right:1.5rem; border-width:1px 1px 0 0; }
+.ic-bl { bottom:1.5rem; left:1.5rem; border-width:0 0 1px 1px; }
+.ic-br { bottom:1.5rem; right:1.5rem; border-width:0 1px 1px 0; }
+
+.intro-content {
+  position:absolute; inset:0; z-index:5;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:0 6vw; max-width:700px;
+}
+.intro-kicker {
+  font-family:'Cinzel',serif; font-size:clamp(.5rem,1vw,.68rem); letter-spacing:.65em;
+  text-transform:uppercase; color:var(--silver);
+  display:flex; align-items:center; gap:1rem;
+  opacity:0; animation:introUp .9s ease .6s forwards;
+}
+.intro-kicker::before { content:''; display:block; width:36px; height:1px; background:linear-gradient(90deg,transparent,var(--silver)); }
+.intro-name {
+  font-family:'Cinzel',serif; font-size:clamp(3rem,8vw,7.5rem); font-weight:900;
+  line-height:.9; letter-spacing:-.01em; margin:1.2rem 0 .5rem;
+  opacity:0; animation:introUp 1.2s cubic-bezier(.2,.9,.3,1) 1s forwards;
+}
+.intro-name span.n1 {
+  display:block;
+  background:linear-gradient(135deg, var(--white) 0%, var(--frost) 25%, var(--ice) 50%, var(--mist) 70%, var(--silver) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.intro-name span.n2 {
+  display:block; color:transparent; -webkit-text-stroke:1.5px rgba(182,212,240,0.4);
+  font-size:60%; letter-spacing:.25em; margin-top:.3rem;
+}
+.intro-poem {
+  font-family:'Cormorant Garamond',serif; font-size:clamp(.95rem,1.8vw,1.3rem);
+  font-style:italic; font-weight:300; color:rgba(214,234,255,.65);
+  line-height:2; max-width:460px; margin:1.5rem 0;
+  border-left:1px solid rgba(182,212,240,.3); padding-left:1.2rem;
+  opacity:0; animation:introUp .9s ease 1.6s forwards;
+}
+.intro-meta {
+  display:flex; align-items:center; gap:2rem; margin-top:.5rem;
+  opacity:0; animation:introUp .9s ease 2s forwards;
+}
+.intro-meta-item { display:flex; flex-direction:column; gap:.15rem; }
+.intro-meta-val {
+  font-family:'Cinzel',serif; font-size:clamp(1rem,2vw,1.6rem); font-weight:700;
+  background:linear-gradient(135deg,var(--white),var(--ice));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.intro-meta-lbl { font-size:.5rem; letter-spacing:.45em; text-transform:uppercase; color:var(--grey-light); font-family:'Cinzel',serif; }
+.intro-meta-div { width:1px; height:36px; background:linear-gradient(180deg,transparent,var(--grey-mid),transparent); }
+.intro-cta {
+  position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); z-index:6;
+  display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  opacity:0; animation:introUp .9s ease 2.6s forwards; cursor:pointer;
+}
+.intro-cta-text { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.55em; text-transform:uppercase; color:rgba(182,212,240,.5); animation:ctaBreathe 2.5s ease-in-out infinite; }
+@keyframes ctaBreathe { 0%,100%{opacity:.4} 50%{opacity:.9} }
+.intro-cta-line { width:1px; height:32px; background:linear-gradient(180deg,rgba(90,181,240,.8),transparent); animation:lineDrop 2s ease-in-out infinite; }
+@keyframes lineDrop { 0%,100%{transform:scaleY(1);transform-origin:top;opacity:.7} 50%{transform:scaleY(.5);transform-origin:top;opacity:.3} }
+@keyframes introUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── PROGRESS ── */
+#progress {
+  position:fixed; top:0; left:0; height:2px; width:0%; z-index:8000;
+  background:linear-gradient(90deg, var(--navy-30), var(--azure), var(--cerulean), var(--white));
+  box-shadow:0 0 18px var(--glow-blue), 0 0 6px rgba(255,255,255,.3);
+  transition:width .55s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── DECK & SLIDES ── */
+.deck { position:relative; width:100vw; height:100vh; overflow:hidden; }
+.slide {
+  position:absolute; inset:0; opacity:0; visibility:hidden;
+  transition:opacity .75s cubic-bezier(.4,0,.2,1), transform .75s cubic-bezier(.4,0,.2,1);
+  transform:translateY(28px);
+  overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:thin; scrollbar-color:var(--navy-40) transparent;
+  background:linear-gradient(145deg, #030a14 0%, #061526 30%, #081b32 60%, #061526 100%);
+}
+.slide::-webkit-scrollbar { width:3px; }
+.slide::-webkit-scrollbar-thumb { background:var(--navy-40); border-radius:10px; }
+.slide.active { opacity:1; visibility:visible; transform:translateY(0); z-index:10; }
+.slide.exit   { opacity:0; transform:translateY(-20px); }
+
+.bk-wrap { position:absolute; inset:16px; pointer-events:none; z-index:50; }
+.bk { position:absolute; width:42px; height:42px; border-color:rgba(182,212,240,.2); border-style:solid; }
+.bk-tl { top:0; left:0;  border-width:1px 0 0 1px; }
+.bk-tr { top:0; right:0; border-width:1px 1px 0 0; }
+.bk-bl { bottom:0; left:0;  border-width:0 0 1px 1px; }
+.bk-br { bottom:0; right:0; border-width:0 1px 1px 0; }
+
+/* ── HUD ── */
+#hud-top-left { position:fixed; top:1.5rem; left:2rem; z-index:500; display:flex; align-items:center; gap:.8rem; }
+.hud-avatar { width:36px; height:36px; border-radius:50%; border:1px solid rgba(90,181,240,.5); overflow:hidden; box-shadow:0 0 16px rgba(34,114,204,.4); }
+.hud-avatar img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+.hud-label { font-family:'Cinzel',serif; font-size:.62rem; font-weight:600; letter-spacing:.2em; background:linear-gradient(135deg,var(--frost),var(--silver)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#hud-top-right { position:fixed; top:1.5rem; right:2rem; z-index:500; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.35em; color:var(--grey-light); }
+
+/* ── NAV ── */
+#nav-wrap { position:fixed; bottom:2rem; right:2rem; display:flex; align-items:center; gap:.8rem; z-index:500; }
+.nav-btn { width:48px; height:48px; border-radius:50%; background:rgba(6,21,38,.75); backdrop-filter:blur(20px); border:1px solid var(--g-border); color:var(--silver); font-size:.85rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .3s ease; }
+.nav-btn:hover { background:rgba(34,114,204,.2); border-color:var(--g-border-h); color:var(--white); transform:scale(1.08); box-shadow:0 0 24px var(--glow-blue); }
+
+/* ── DOTS ── */
+#dots { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; gap:.5rem; z-index:500; background:rgba(6,21,38,.7); backdrop-filter:blur(20px); padding:.5rem 1.2rem; border-radius:40px; border:1px solid var(--g-border); }
+.dot { width:5px; height:5px; border-radius:50%; background:rgba(182,212,240,.25); cursor:pointer; transition:all .35s cubic-bezier(.4,0,.2,1); }
+.dot.on { width:20px; background:var(--azure); border-radius:8px; box-shadow:0 0 8px var(--azure); }
+
+/* ── POEM BLOCK ── */
+.poem-block {
+  position:relative; padding:1.4rem 1.6rem 1.4rem 2rem;
+  background:linear-gradient(135deg, rgba(34,114,204,.12) 0%, rgba(10,31,56,.35) 50%, rgba(6,21,38,.45) 100%);
+  border:1px solid rgba(182,212,240,.14); border-left:2px solid rgba(90,181,240,.5);
+  border-radius:0 14px 14px 0; backdrop-filter:blur(10px); overflow:hidden;
+}
+.poem-block::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,rgba(90,181,240,.6),rgba(255,255,255,.2),transparent); }
+.poem-block::after { content:'\201C'; position:absolute; top:-.2rem; left:.6rem; font-family:'Cormorant Garamond',serif; font-size:5rem; line-height:1; color:rgba(90,181,240,.15); pointer-events:none; }
+.poem-text { font-family:'Cormorant Garamond',serif; font-size:clamp(.9rem,1.6vw,1.15rem); font-style:italic; font-weight:300; line-height:2.1; color:rgba(214,234,255,.75); position:relative; z-index:1; }
+.poem-text em { color:var(--ice); font-style:normal; font-weight:400; }
+.poem-refrain { font-family:'Cinzel',serif; font-size:clamp(.7rem,1.2vw,.9rem); font-weight:600; letter-spacing:.25em; color:rgba(90,181,240,.6); margin-top:.6rem; }
+
+.refrain-block {
+  text-align:center; padding:2.5rem 1.5rem;
+  background:linear-gradient(145deg,rgba(6,21,38,.8),rgba(10,31,56,.5));
+  border:1px solid rgba(182,212,240,.12);
+  border-top:1px solid rgba(90,181,240,.3); border-bottom:1px solid rgba(90,181,240,.3);
+  border-radius:16px; backdrop-filter:blur(16px); position:relative; overflow:hidden;
+}
+.refrain-block::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(34,114,204,.08),transparent 65%); pointer-events:none; }
+.refrain-line {
+  font-family:'Cinzel',serif; font-size:clamp(1.2rem,3.5vw,2.8rem); font-weight:700; letter-spacing:.22em;
+  display:block; margin:.3rem 0;
+  background:linear-gradient(135deg,var(--silver) 0%,var(--white) 40%,var(--ice) 70%,var(--silver) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:refrainPulse 4s ease-in-out infinite;
+}
+.refrain-line:nth-child(2) { animation-delay:.3s; opacity:.8; font-size:80%; }
+.refrain-line:nth-child(3) { animation-delay:.6s; opacity:.6; font-size:65%; }
+@keyframes refrainPulse { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.3)} }
+
+/* ── TYPOGRAPHY ── */
+.eyebrow { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.6em; text-transform:uppercase; color:var(--azure); display:flex; align-items:center; gap:.8rem; margin-bottom:.8rem; }
+.eyebrow::before { content:''; display:block; width:24px; height:1px; background:var(--azure); }
+.slide-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4.5vw,3.6rem); font-weight:900; line-height:1.05; background:linear-gradient(135deg, var(--white) 0%, var(--snow) 20%, var(--frost) 40%, var(--ice) 60%, var(--mist) 80%, var(--silver) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:.8rem; }
+.silver-rule { width:60px; height:1px; background:linear-gradient(90deg,transparent,var(--azure),var(--white),var(--azure),transparent); margin:.9rem 0 1.5rem; box-shadow:0 0 8px rgba(34,114,204,.3); }
+.body-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1rem,1.5vw,1.2rem); font-style:italic; font-weight:300; line-height:1.95; color:rgba(214,234,255,.8); }
+
+/* ── GLASS CARDS ── */
+.gc {
+  background:linear-gradient(145deg, rgba(22,64,104,.45) 0%, rgba(10,31,56,.55) 40%, rgba(6,21,38,.65) 100%);
+  border:1px solid var(--g-border); border-top:1px solid rgba(255,255,255,.06); border-left:1px solid rgba(255,255,255,.04);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-radius:18px; position:relative; overflow:hidden;
+  transition:all .45s cubic-bezier(.4,0,.2,1);
+}
+.gc::after { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(145deg,rgba(255,255,255,.04) 0%,transparent 50%,rgba(182,212,240,.02) 100%); pointer-events:none; }
+.gc::before { content:''; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),rgba(214,234,255,.5),rgba(255,255,255,.3),transparent); transform:scaleX(0); transition:transform .55s ease; }
+.gc:hover { border-color:rgba(182,212,240,.3); transform:translateY(-5px); box-shadow:0 28px 64px rgba(0,0,0,.65),0 0 0 1px rgba(34,114,204,.12),0 0 60px rgba(34,114,204,.07),inset 0 1px 0 rgba(255,255,255,.06); }
+.gc:hover::before { transform:scaleX(1); }
+.gc-bright { background:linear-gradient(145deg,rgba(34,114,204,.28) 0%,rgba(22,64,104,.42) 40%,rgba(10,31,56,.58) 100%); border-color:rgba(90,181,240,.2); }
+.gc-white { background:linear-gradient(145deg,rgba(255,255,255,.07) 0%,rgba(214,234,255,.04) 30%,rgba(10,31,56,.6) 100%); border-color:rgba(255,255,255,.12); border-top-color:rgba(255,255,255,.18); }
+
+.section-inner { max-width:1300px; margin:0 auto; padding:4rem 2.8rem; }
+.g2 { display:grid; grid-template-columns:repeat(2,1fr); gap:1.3rem; }
+.g3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+.g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+.g5 { display:grid; grid-template-columns:repeat(5,1fr); gap:.85rem; }
+.span2 { grid-column:span 2; } .span3 { grid-column:span 3; }
+
+.stat-card { text-align:center; padding:1.6rem 2rem; }
+.stat-num { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,4.5vw,3.6rem); font-weight:900; line-height:1; background:linear-gradient(135deg,var(--white),var(--frost),var(--ice)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block; }
+.stat-lbl { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.42em; text-transform:uppercase; color:var(--grey-light); margin-top:.4rem; display:block; }
+.stat-ok { font-size:.62rem; color:var(--cerulean); margin-top:.5rem; }
+.ck { list-style:none; }
+.ck li { display:flex; gap:.7rem; margin-bottom:.75rem; font-size:.86rem; align-items:flex-start; line-height:1.6; }
+.ck li i { color:var(--azure); margin-top:.15rem; flex-shrink:0; font-size:.8rem; }
+.hl { background:linear-gradient(145deg,rgba(34,114,204,.14),rgba(10,31,56,.2)); border:1px solid rgba(34,114,204,.22); border-radius:14px; padding:1.2rem 1.4rem; transition:all .35s ease; }
+.hl:hover { border-color:rgba(34,114,204,.45); box-shadow:0 12px 40px rgba(0,0,0,.4),0 0 30px rgba(34,114,204,.07); transform:translateY(-3px); }
+.banner { background:linear-gradient(135deg,rgba(4,15,30,.88),rgba(22,64,104,.32)); border:1px solid var(--g-border); border-top:1px solid rgba(90,181,240,.22); border-radius:14px; padding:1.4rem 1.8rem; display:flex; align-items:center; gap:1.2rem; }
+.tag { display:inline-flex; align-items:center; gap:.5rem; background:rgba(34,114,204,.15); border:1px solid rgba(34,114,204,.28); border-radius:6px; padding:.25rem .75rem; font-family:'Cinzel',serif; font-size:.52rem; font-weight:600; letter-spacing:.22em; color:var(--cerulean); margin-top:.8rem; }
+
+/* ── SITE CARDS ── */
+.site-card { position:relative; border-radius:14px; overflow:hidden; cursor:pointer; aspect-ratio:4/3; border:1px solid var(--g-border); background:var(--navy-20); transition:all .5s cubic-bezier(.4,0,.2,1); }
+.site-card:hover { transform:translateY(-10px) scale(1.02); border-color:rgba(90,181,240,.55); box-shadow:0 30px 70px rgba(0,0,0,.8),0 0 0 1px rgba(34,114,204,.25),0 0 70px rgba(34,114,204,.1); }
+.site-card img { width:100%; height:100%; object-fit:cover; object-position:center top; transition:transform .7s cubic-bezier(.4,0,.2,1),filter .5s ease; display:block; }
+.site-card:hover img { transform:scale(1.14); filter:brightness(.42) saturate(1.1); }
+.site-card::before { content:''; position:absolute; top:-130%; left:0; right:0; height:55%; background:linear-gradient(180deg,transparent,rgba(182,212,240,.07),transparent); z-index:2; pointer-events:none; transition:top .75s ease; }
+.site-card:hover::before { top:140%; }
+.site-card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent); opacity:0; z-index:2; transition:opacity .3s ease; }
+.site-card:hover::after { opacity:1; }
+.site-ov { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; background:linear-gradient(160deg,rgba(2,12,22,.62),rgba(6,21,38,.84)); backdrop-filter:blur(5px); opacity:0; transition:opacity .45s ease; z-index:5; pointer-events:none; }
+.site-card:hover .site-ov { opacity:1; pointer-events:auto; }
+.site-name { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.3em; color:var(--silver); transform:translateY(14px); transition:transform .4s ease .05s; }
+.site-card:hover .site-name { transform:translateY(0); }
+.check-btn { display:inline-flex; align-items:center; gap:.55rem; padding:.62rem 1.6rem; font-family:'Cinzel',serif; font-size:.6rem; font-weight:700; letter-spacing:.22em; text-decoration:none; color:var(--white); background:linear-gradient(135deg,rgba(22,64,104,.9) 0%,rgba(34,114,204,.9) 50%,rgba(90,181,240,.85) 100%); border:1px solid rgba(214,234,255,.4); border-radius:40px; cursor:pointer; transform:translateY(16px) scale(.85); transition:transform .45s ease .1s,box-shadow .3s ease; position:relative; overflow:hidden; }
+.site-card:hover .check-btn { transform:translateY(0) scale(1); animation:btnPulse 1.6s ease-in-out infinite .2s; }
+@keyframes btnPulse { 0%,100%{box-shadow:0 0 0 0 rgba(90,181,240,.65),0 4px 24px rgba(34,114,204,.4)} 50%{box-shadow:0 0 0 12px rgba(90,181,240,0),0 4px 40px rgba(90,181,240,.75)} }
+.check-btn::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-100%); transition:transform .65s ease; }
+.check-btn:hover::before { transform:translateX(100%); }
+.check-btn:hover { background:linear-gradient(135deg,var(--azure),var(--sky),var(--cerulean)); box-shadow:0 0 50px rgba(90,181,240,.9),0 0 100px rgba(34,114,204,.3); }
+.site-lbl { position:absolute; bottom:0; left:0; right:0; padding:.5rem .8rem; background:linear-gradient(0deg,rgba(2,12,22,.94),transparent); font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.22em; color:rgba(182,212,240,.45); z-index:3; pointer-events:none; transition:opacity .3s ease; }
+.site-card:hover .site-lbl { opacity:0; }
+
+/* ── LOGO CARDS ── */
+.logo-card { position:relative; border-radius:12px; overflow:hidden; cursor:pointer; aspect-ratio:1/1; border:1px solid var(--g-border); background:linear-gradient(145deg,rgba(22,64,104,.38),rgba(6,21,38,.65)); transition:all .45s cubic-bezier(.4,0,.2,1); }
+.logo-card:hover { transform:translateY(-8px) rotate(.9deg) scale(1.05); border-color:rgba(182,212,240,.38); box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 40px rgba(182,212,240,.06); }
+.logo-card img { width:100%; height:100%; object-fit:contain; padding:1rem; transition:transform .55s ease; }
+.logo-card:hover img { transform:scale(1.15) rotate(-.9deg); }
+.logo-ov { position:absolute; inset:0; background:linear-gradient(135deg,rgba(2,12,22,.7),rgba(22,64,104,.45)); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .35s ease; z-index:3; }
+.logo-card:hover .logo-ov { opacity:1; }
+.logo-ex { font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.3em; color:var(--frost); border:1px solid rgba(182,212,240,.35); padding:.3rem .85rem; border-radius:20px; transform:scale(.82); transition:transform .3s ease; }
+.logo-card:hover .logo-ex { transform:scale(1); }
+
+/* ── PITCH CARDS ── */
+.pitch-card { position:relative; border-radius:12px; overflow:hidden; border:1px solid var(--g-border); background:var(--navy-20); cursor:pointer; aspect-ratio:3/4; transition:all .4s ease; }
+.pitch-card img { width:100%; height:100%; object-fit:cover; transition:transform .55s ease,filter .4s ease; }
+.pitch-card:hover { border-color:rgba(182,212,240,.35); transform:translateY(-7px); box-shadow:0 24px 55px rgba(0,0,0,.7); }
+.pitch-card:hover img { transform:scale(1.07); filter:brightness(.5); }
+.pitch-ov { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .3s ease; background:rgba(2,12,22,.35); }
+.pitch-card:hover .pitch-ov { opacity:1; }
+.pitch-ex { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.25em; color:var(--white); border:1px solid rgba(255,255,255,.35); padding:.32rem .85rem; border-radius:20px; transform:scale(.82); transition:transform .3s ease; }
+.pitch-card:hover .pitch-ex { transform:scale(1); }
+
+/* ── LIGHTBOX ── */
+#lightbox { position:fixed; inset:0; z-index:7000; display:flex; align-items:center; justify-content:center; background:rgba(2,8,16,.95); backdrop-filter:blur(32px); opacity:0; visibility:hidden; transition:all .45s ease; }
+#lightbox.open { opacity:1; visibility:visible; }
+#lb-inner { position:relative; max-width:92vw; max-height:88vh; border-radius:18px; overflow:hidden; border:1px solid rgba(182,212,240,.25); box-shadow:0 40px 100px rgba(0,0,0,.9),0 0 100px rgba(34,114,204,.1); transform:scale(.94); transition:transform .45s cubic-bezier(.4,0,.2,1); }
+#lightbox.open #lb-inner { transform:scale(1); }
+#lb-img { display:block; max-width:92vw; max-height:80vh; object-fit:contain; }
+#lb-lbl { position:absolute; bottom:0; left:0; right:0; padding:.85rem 1.4rem; background:linear-gradient(0deg,rgba(2,12,22,.97),transparent); font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.3em; color:var(--silver); }
+#lb-close { position:fixed; top:2rem; right:2rem; z-index:7001; width:46px; height:46px; border-radius:50%; background:rgba(6,21,38,.85); backdrop-filter:blur(16px); border:1px solid var(--g-border); color:var(--silver); font-size:1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .3s ease; }
+#lb-close:hover { background:rgba(34,114,204,.25); border-color:var(--g-border-h); color:var(--white); box-shadow:0 0 20px var(--glow-blue); }
+
+/* ── SLIDE 1 HERO ── */
+#s1 { background:linear-gradient(145deg,#020c16 0%,#040f1e 30%,#061526 60%,#040f1e 100%); overflow:hidden; }
+.s1-inner { position:relative; z-index:5; display:grid; grid-template-columns:1.1fr 1fr; align-items:center; min-height:100vh; gap:0; }
+.s1-portrait-col { position:relative; height:100vh; overflow:hidden; }
+.s1-portrait-col img { width:100%; height:100%; object-fit:cover; object-position:center 10%; filter:brightness(.65) saturate(1.0) contrast(1.05); }
+.s1-portrait-veil { position:absolute; inset:0; background:linear-gradient(90deg,rgba(2,12,22,0) 0%,rgba(2,12,22,.15) 60%,rgba(4,15,30,.75) 85%,rgba(4,15,30,.95) 100%),linear-gradient(0deg,rgba(2,12,22,.9) 0%,rgba(2,12,22,.3) 20%,transparent 60%,rgba(2,12,22,.2) 90%); }
+.s1-edge-line { position:absolute; right:0; top:10%; bottom:10%; width:1px; background:linear-gradient(180deg,transparent,rgba(90,181,240,.4) 30%,rgba(255,255,255,.3) 50%,rgba(90,181,240,.4) 70%,transparent); box-shadow:0 0 20px rgba(34,114,204,.3); }
+.s1-portrait-tag { position:absolute; bottom:2.5rem; left:2rem; padding:.7rem 1.2rem; background:rgba(4,15,30,.75); backdrop-filter:blur(16px); border:1px solid rgba(182,212,240,.2); border-radius:10px; }
+.s1-ptag-name { font-family:'Cinzel',serif; font-size:clamp(.7rem,1.5vw,1.1rem); font-weight:700; letter-spacing:.12em; background:linear-gradient(135deg,var(--white),var(--ice)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.s1-ptag-role { font-size:.5rem; letter-spacing:.4em; color:var(--grey-light); text-transform:uppercase; margin-top:.2rem; font-family:'Cinzel',serif; }
+.s1-text-col { padding:5rem 3.5rem 5rem 3rem; display:flex; flex-direction:column; gap:1.2rem; }
+.s1-kicker { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.58em; text-transform:uppercase; color:var(--azure); display:flex; align-items:center; gap:.8rem; opacity:0; animation:introUp .9s ease .3s forwards; }
+.s1-kicker::before { content:''; display:block; width:24px; height:1px; background:var(--azure); }
+.s1-headline { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,6vw,5.5rem); font-weight:900; line-height:.92; background:linear-gradient(160deg,var(--white) 0%,var(--snow) 15%,var(--frost) 35%,var(--ice) 55%,var(--mist) 75%,var(--silver) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; opacity:0; animation:introUp 1s cubic-bezier(.2,.9,.3,1) .5s forwards; }
+.s1-rule { width:100%; height:1px; background:linear-gradient(90deg,var(--g-border),rgba(90,181,240,.4),var(--g-border)); margin:.2rem 0; opacity:0; animation:introUp .8s ease .8s forwards; }
+.s1-sub { font-family:'Cormorant Garamond',serif; font-size:clamp(.92rem,1.5vw,1.1rem); font-style:italic; font-weight:300; color:rgba(214,234,255,.72); line-height:1.85; max-width:440px; opacity:0; animation:introUp .8s ease .9s forwards; }
+.s1-stats { display:flex; gap:2rem; opacity:0; animation:introUp .8s ease 1.1s forwards; }
+.s1-sn { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,3vw,2.6rem); font-weight:900; background:linear-gradient(135deg,var(--white),var(--ice)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.s1-sl { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.3em; color:var(--grey-light); }
+.s1-pills { display:flex; gap:.7rem; flex-wrap:wrap; opacity:0; animation:introUp .8s ease 1.3s forwards; }
+.s1-pill { display:inline-flex; align-items:center; gap:.5rem; padding:.42rem 1rem; background:rgba(10,31,56,.7); border:1px solid var(--g-border); backdrop-filter:blur(10px); border-radius:30px; font-family:'Cinzel',serif; font-size:.5rem; font-weight:600; letter-spacing:.2em; color:var(--ice); }
+.s1-pill i { color:var(--azure); font-size:.65rem; }
+.s1-poem-wrap { opacity:0; animation:introUp .8s ease 1.5s forwards; }
+.scroll-hint { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.45em; color:rgba(182,212,240,.3); z-index:20; display:flex; flex-direction:column; align-items:center; gap:5px; pointer-events:none; animation:introUp .8s ease 2s both; }
+.scroll-bar { width:1px; height:28px; background:linear-gradient(180deg,var(--azure),transparent); animation:lineDrop 2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<!-- ══ INTRO ══ -->
+<div id="intro">
+  <canvas id="intro-canvas"></canvas>
+  <div class="intro-portrait-bg">
+    <div class="intro-portrait-img-wrap">
+      <!-- ╔══════════════════════════════════════════════╗
+           ║  YOUR PORTRAIT — INTRO FULL-BLEED           ║
+           ║  Replace: ./your-photo.jpg                  ║
+           ╚══════════════════════════════════════════════╝ -->
+      <img src="./your-photo.jpg"
+           onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&h=900&fit=crop&crop=face&q=90'"
+           alt="Khetho Mngomezulu">
+    </div>
+    <div class="intro-veil"></div>
+    <div class="intro-slash"></div>
+    <div class="intro-right-glow"></div>
+  </div>
+  <div class="intro-corner ic-tl"></div>
+  <div class="intro-corner ic-tr"></div>
+  <div class="intro-corner ic-bl"></div>
+  <div class="intro-corner ic-br"></div>
+  <div class="intro-content">
+    <div class="intro-kicker">March 2026 &nbsp;·&nbsp; Final KPI Report &nbsp;·&nbsp; Brandscapers Africa</div>
+    <div class="intro-name">
+      <span class="n1">KHETHO</span>
+      <span class="n2">MNGOMEZULU</span>
+    </div>
+    <div class="intro-poem">
+      "We are dreaming of tomorrow<br>
+      and tomorrow isn't coming—<br>
+      We are running from the battle<br>
+      when it's one that must be fought."
+    </div>
+    <div class="intro-meta">
+      <div class="intro-meta-item"><span class="intro-meta-val">27</span><span class="intro-meta-lbl">Websites</span></div>
+      <div class="intro-meta-div"></div>
+      <div class="intro-meta-item"><span class="intro-meta-val">20</span><span class="intro-meta-lbl">Logos</span></div>
+      <div class="intro-meta-div"></div>
+      <div class="intro-meta-item"><span class="intro-meta-val">100%</span><span class="intro-meta-lbl">Target</span></div>
+      <div class="intro-meta-div"></div>
+      <div class="intro-meta-item"><span class="intro-meta-val">March</span><span class="intro-meta-lbl">2026</span></div>
+    </div>
+  </div>
+  <div class="intro-cta" id="intro-cta">
+    <div class="intro-cta-text">Enter Presentation</div>
+    <div class="intro-cta-line"></div>
+  </div>
+</div>
+
+<!-- ══ HUD ══ -->
+<div id="progress"></div>
+<div id="hud-top-left">
+  <div class="hud-avatar">
+    <!-- ╔══════════════════════════════════════════════╗
+         ║  HUD AVATAR (top-left mini portrait)        ║
+         ║  Replace: ./your-photo.jpg                  ║
+         ╚══════════════════════════════════════════════╝ -->
+    <img src="./your-photo.jpg"
+         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face'"
+         alt="K">
+  </div>
+  <span class="hud-label">MARCH KPI · KHETHO</span>
+</div>
+<div id="hud-top-right">01 / 20</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <div id="lb-inner"><img id="lb-img" src="" alt=""><div id="lb-lbl"></div></div>
+  <button id="lb-close"><i class="fas fa-times"></i></button>
+</div>
+
+<div id="nav-wrap">
+  <button class="nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+  <button class="nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+</div>
+<div id="dots"></div>
+
+<!-- ══════════════════════════════════════════
+     DECK
+══════════════════════════════════════════ -->
+<div class="deck" id="deck">
+
+<!-- S1 HERO -->
+<div class="slide active" id="s1">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="s1-inner">
+    <div class="s1-portrait-col">
+      <!-- ╔══════════════════════════════════════════════╗
+           ║  HERO SLIDE PORTRAIT (left half)            ║
+           ║  Replace: ./your-photo.jpg                  ║
+           ╚══════════════════════════════════════════════╝ -->
+      <img src="./your-photo.jpg"
+           onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&h=1200&fit=crop&crop=face&q=90'"
+           alt="Khetho Mngomezulu">
+      <div class="s1-portrait-veil"></div>
+      <div class="s1-edge-line"></div>
+      <div class="s1-portrait-tag">
+        <div class="s1-ptag-name">Khetho Mngomezulu</div>
+        <div class="s1-ptag-role">Digital Creative · Developer</div>
+      </div>
+    </div>
+    <div class="s1-text-col">
+      <div class="s1-kicker">March 2026 · Brandscapers Africa · KPI Review</div>
+      <div class="s1-headline">KPI<br>PERFORM<br>ANCE</div>
+      <div class="s1-rule"></div>
+      <p class="s1-sub">1 March – 30 March 2026 &nbsp;·&nbsp; 27 Websites · 20 Logos · Systems · Stakeholders · Strategy</p>
+      <div class="s1-stats">
+        <div><div class="s1-sn">27</div><div class="s1-sl">Websites</div></div>
+        <div><div class="s1-sn">20</div><div class="s1-sl">Logos</div></div>
+        <div><div class="s1-sn">100%</div><div class="s1-sl">Target</div></div>
+      </div>
+      <div class="s1-pills">
+        <div class="s1-pill"><i class="fas fa-code"></i> Development</div>
+        <div class="s1-pill"><i class="fas fa-palette"></i> Design</div>
+        <div class="s1-pill"><i class="fas fa-database"></i> Systems</div>
+        <div class="s1-pill"><i class="fas fa-users"></i> Collaboration</div>
+      </div>
+      <div class="s1-poem-wrap">
+        <div class="poem-block">
+          <div class="poem-text">"We are dreaming of tomorrow and <em>tomorrow isn't coming</em> — We are dreaming of a glory that we don't really want."</div>
+          <div class="poem-refrain">— While others slept, I delivered.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>EXPLORE</span><div class="scroll-bar"></div></div>
+</div>
+
+<!-- S2 OVERVIEW -->
+<div class="slide" id="s2">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Monthly Focus</div><h2 class="slide-title">Overview</h2><div class="silver-rule"></div>
+    <div class="g2" style="margin-top:1.5rem;gap:1.5rem;">
+      <div class="gc" style="padding:2rem;">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.3rem;"><div style="width:38px;height:38px;background:rgba(34,114,204,.15);border:1px solid rgba(34,114,204,.28);border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-code" style="color:var(--azure);font-size:.9rem;"></i></div><h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;">Core Deliverables</h3></div>
+        <ul class="ck"><li><i class="fas fa-check-circle"></i>Website design &amp; development</li><li><i class="fas fa-check-circle"></i>Logo &amp; brand identity design</li><li><i class="fas fa-check-circle"></i>System development &amp; technical tasks</li><li><i class="fas fa-check-circle"></i>Stakeholder collaboration &amp; presentations</li><li><i class="fas fa-check-circle"></i>Hosting, deployment &amp; quality assurance</li><li><i class="fas fa-check-circle"></i>Data systems, dashboards &amp; MVPs</li></ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="gc gc-bright" style="padding:1.8rem;flex:1;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:.8rem;">Mission</h3>
+          <p class="body-text">Deliver high-quality digital solutions — from design to deployment — meeting every KPI target with excellence, agility, and soul.</p>
+          <div style="display:flex;gap:1.5rem;margin-top:1.2rem;border-top:1px solid var(--g-border);padding-top:1rem;"><div style="text-align:center;"><span class="stat-num" style="font-size:1.8rem;">27</span><span class="stat-lbl">Sites</span></div><div style="text-align:center;"><span class="stat-num" style="font-size:1.8rem;">20</span><span class="stat-lbl">Logos</span></div><div style="text-align:center;"><span class="stat-num" style="font-size:1.8rem;">100%</span><span class="stat-lbl">KPI</span></div></div>
+        </div>
+        <div class="poem-block"><div class="poem-text">"We are dreaming of a new day when <em>the new day's here already</em> — We are running from the battle when it's one that must be fought."</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S3 KPI TARGETS -->
+<div class="slide" id="s3">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Targets Achieved</div><h2 class="slide-title">KPI Targets vs Achievements</h2><div class="silver-rule"></div>
+    <div style="display:flex;gap:1.3rem;flex-wrap:wrap;margin:1.5rem 0;">
+      <div class="gc gc-white stat-card" style="border-top:2px solid var(--azure);min-width:160px;flex:1;"><span class="stat-num">27</span><span class="stat-lbl">Websites Delivered</span><div class="stat-ok">✅ Target Met</div></div>
+      <div class="gc stat-card" style="border-top:2px solid var(--silver);min-width:160px;flex:1;"><span class="stat-num">20</span><span class="stat-lbl">Logos Designed</span><div class="stat-ok">✅ Target Met</div></div>
+      <div class="gc gc-bright stat-card" style="border-top:2px solid rgba(214,234,255,.6);min-width:160px;flex:1;"><span class="stat-num">100%</span><span class="stat-lbl">Completion Rate</span><div class="stat-ok">✅ Perfect</div></div>
+    </div>
+    <div class="banner" style="margin-bottom:1.2rem;"><i class="fas fa-trophy" style="font-size:2rem;color:var(--azure);flex-shrink:0;"></i><div><div style="font-family:'Cinzel',serif;font-weight:700;letter-spacing:.12em;font-size:.85rem;color:var(--snow);">KPI TARGETS SUCCESSFULLY MET</div><div style="font-size:.82rem;color:var(--grey-light);margin-top:.25rem;">Every deliverable across design, development, systems &amp; collaboration. No excuses. Just results.</div></div></div>
+    <div class="refrain-block"><span class="refrain-line">And still we sleep.</span><span class="refrain-line">But not I.</span><span class="refrain-line">Not this month.</span></div>
+  </div>
+</div>
+
+<!-- S4 WEBSITE OUTPUT — grid built by JS -->
+<div class="slide" id="s4">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Website Portfolio</div><h2 class="slide-title">Website Development Output</h2><div class="silver-rule"></div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+      <p class="body-text">27 websites · hover to reveal · click for fullscreen · "Check Me Out" visits the live site</p>
+      <div class="poem-block" style="max-width:340px;padding:1rem 1.2rem 1rem 1.6rem;"><div class="poem-text" style="font-size:.85rem;line-height:1.9;">"We are <em>listening for the calling</em><br>but never really heeding —"</div></div>
+    </div>
+    <div class="g4" id="websiteGrid"></div>
+  </div>
+</div>
+
+<!-- S5 LOGO DESIGN — grid built by JS -->
+<div class="slide" id="s5">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Brand Identity</div><h2 class="slide-title">Logo Design Output</h2><div class="silver-rule"></div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+      <p class="body-text">20 brand marks crafted · hover to enlarge · click for fullscreen</p>
+      <div class="poem-block" style="max-width:340px;padding:1rem 1.2rem 1rem 1.6rem;"><div class="poem-text" style="font-size:.85rem;line-height:1.9;">"Hoping for the future<br>when <em>the future's only plans</em> —"</div></div>
+    </div>
+    <div class="g5" id="logoGrid"></div>
+  </div>
+</div>
+
+<!-- S6 BIDVEST -->
+<div class="slide" id="s6">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Bidvest Partnership</div><h2 class="slide-title">Bidvest Beneficiary Work</h2><div class="silver-rule"></div>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+      <p class="body-text">3 websites delivered to Bidvest beneficiaries — presented live to stakeholders</p>
+      <div class="poem-block" style="max-width:340px;padding:1rem 1.2rem 1rem 1.6rem;"><div class="poem-text" style="font-size:.85rem;line-height:1.9;">"Dreaming of the wisdom<br>that we are <em>dodging daily</em> —"</div></div>
+    </div>
+    <div class="g3" id="bidvestGrid"></div>
+  </div>
+</div>
+
+<!-- S7 BIDVEST PRESENTATION -->
+<div class="slide" id="s7">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Stakeholder Engagement</div><h2 class="slide-title">Bidvest Presentation</h2><div class="silver-rule"></div>
+    <div class="g2" style="gap:1.3rem;margin-top:.5rem;">
+      <div class="gc" style="padding:1.8rem;"><h3 style="font-family:'Playfair Display',serif;margin-bottom:1.1rem;font-size:1.1rem;">What Was Presented</h3><ul class="ck"><li><i class="fas fa-chalkboard-user"></i>Attended &amp; actively led delivery in the Bidvest presentation</li><li><i class="fas fa-display"></i>Presented all 3 beneficiary websites live to stakeholders</li><li><i class="fas fa-microphone-alt"></i>Design decisions, functionality &amp; technical delivery walkthrough</li><li><i class="fas fa-comments"></i>Engaged in strategic Q&amp;A — received high-level feedback</li></ul></div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="gc gc-bright" style="padding:1.8rem;flex:1;"><div style="display:flex;gap:.8rem;align-items:center;margin-bottom:.8rem;"><i class="fas fa-star" style="color:var(--azure);font-size:1.3rem;"></i><h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;">Impact</h3></div><p class="body-text">Showcased Brandscapers' capability under real stakeholder pressure. Partnership confidence strengthened.</p><div class="tag"><i class="fas fa-handshake"></i>Partnership Strengthened</div></div>
+        <div class="poem-block"><div class="poem-text">"Praying for a saviour when <em>salvation's in our hands</em>."</div><div class="poem-refrain">I chose action. I delivered.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 PRO BONO -->
+<div class="slide" id="s8">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Pro Bono Contribution</div><h2 class="slide-title">3K Auto Body Website</h2><div class="silver-rule"></div>
+    <div class="g2" style="gap:1.5rem;align-items:start;">
+      <div>
+        <div class="gc" style="padding:1.8rem;margin-bottom:1rem;"><p class="body-text">Designed and developed a full professional website as a value-added contribution — ensuring professional digital presence at no commercial cost.</p></div>
+        <div class="hl" style="margin-bottom:1rem;"><div style="display:flex;gap:.6rem;align-items:center;margin-bottom:.5rem;"><i class="fas fa-heart" style="color:var(--azure);"></i><span style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;">VALUE ADDED WORK</span></div><p style="font-size:.82rem;color:var(--grey-light);">Community. Character. Excellence beyond the brief.</p></div>
+        <div class="refrain-block"><span class="refrain-line">And still we sleep.</span><span class="refrain-line">And still we pray.</span></div>
+      </div>
+      <div class="site-card" style="aspect-ratio:16/10;">
+        <!-- ╔══════════════════════════════════════════════╗
+             ║  3K AUTO BODY screenshot                    ║
+             ║  Replace: ./screenshots/3k-autobody.jpg    ║
+             ╚══════════════════════════════════════════════╝ -->
+        <img src="./screenshots/3k-autobody.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/id/20/800/500'" alt="3K Auto Body">
+        <div class="site-ov"><div class="site-name">3K AUTO BODY</div><a class="check-btn" href="#" onclick="return false;"><i class="fas fa-arrow-up-right-from-square"></i> CHECK ME OUT</a></div>
+        <div class="site-lbl">3K Auto Body · Pro Bono</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 ENS FOUNDATION -->
+<div class="slide" id="s9">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner">
+    <div class="eyebrow">Foundation Work</div><h2 class="slide-title">ENS Foundation Enhancements</h2><div class="silver-rule"></div>
+    <div class="g2" style="gap:1.5rem;align-items:start;">
+      <div>
+        <div class="gc" style="padding:1.8rem;margin-bottom:1rem;"><ul class="ck"><li><i class="fas fa-palette"></i>Full visual design refresh — colour, layout &amp; typography</li><li><i class="fas fa-mobile-alt"></i>UI elements, navigation &amp; full responsiveness</li><li><i class="fas fa-sync-alt"></i>Modernised look aligned to brand standards</li><li><i class="fas fa-users"></i>Collaborative design direction with the team</li><li><i class="fas fa-check-double"></i>Quality tested across all devices</li></ul></div>
+        <div class="poem-block"><div class="poem-text">"And still we fear — but <em>I did not fear</em>. I built. I launched. I stood."</div><div class="poem-refrain">— Khetho, March 2026</div></div>
+      </div>
+      <div class="site-card" style="aspect-ratio:16/10;">
+        <!-- ╔══════════════════════════════════════════════╗
+             ║  ENS FOUNDATION screenshot                  ║
+             ║  Replace: ./screenshots/ens-foundation.jpg  ║
+             ╚══════════════════════════════════════════════╝ -->
+        <img src="./screenshots/ens-foundation.jpg" onerror="this.onerror=null;this.src='https://picsum.photos/id/104/800/500'" alt="ENS Foundation">
+        <div class="site-ov"><div class="site-name">ENS FOUNDATION</div><a class="check-btn" href="#" onclick="return false;"><i class="fas fa-arrow-up-right-from-square"></i> CHECK ME OUT</a></div>
+        <div class="site-lbl">ENS Foundation · Redesign</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S10–S20: remaining slides condensed -->
+<div class="slide" id="s10"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Refinements</div><h2 class="slide-title">Website Enhancements &amp; Amendments</h2><div class="silver-rule"></div><div class="g3" style="gap:1rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="hl"><i class="fas fa-pen-ruler" style="color:var(--azure);font-size:1.4rem;margin-bottom:.8rem;display:block;"></i><h4 style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;margin-bottom:.5rem;">Design Amendments</h4><p style="font-size:.8rem;color:var(--grey-light);">Multiple rounds of design &amp; content revisions across active projects.</p></div><div class="hl"><i class="fas fa-mobile-alt" style="color:var(--azure);font-size:1.4rem;margin-bottom:.8rem;display:block;"></i><h4 style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;margin-bottom:.5rem;">UI/UX Consistency</h4><p style="font-size:.8rem;color:var(--grey-light);">Improved responsiveness, navigation flow &amp; layout coherence.</p></div><div class="hl"><i class="fas fa-check-double" style="color:var(--azure);font-size:1.4rem;margin-bottom:.8rem;display:block;"></i><h4 style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;margin-bottom:.5rem;">Quality Standards</h4><p style="font-size:.8rem;color:var(--grey-light);">Every site reviewed — no site ships below standard.</p></div></div><div class="poem-block"><div class="poem-text">"We are dreaming of a glory that we <em>don't really want</em> — but I wanted it. And I built it. Every single day."</div></div></div></div>
+
+<div class="slide" id="s11"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Launch</div><h2 class="slide-title">Hosting &amp; Deployment</h2><div class="silver-rule"></div><div class="g3" style="gap:1rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="gc" style="padding:1.6rem;text-align:center;"><i class="fas fa-globe" style="font-size:2rem;color:var(--azure);margin-bottom:1rem;display:block;"></i><h4 style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;margin-bottom:.5rem;">Multi-Site Hosting</h4><p style="font-size:.8rem;color:var(--grey-light);">Multiple client sites hosted &amp; deployed to production.</p></div><div class="gc gc-bright" style="padding:1.6rem;text-align:center;border-top:1px solid rgba(90,181,240,.35);"><i class="fas fa-server" style="font-size:2rem;color:var(--silver);margin-bottom:1rem;display:block;"></i><h4 style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;margin-bottom:.5rem;">Sekatebo — Live</h4><p style="font-size:.8rem;color:var(--grey-light);">Sekatebo website fully live on its domain.</p></div><div class="gc" style="padding:1.6rem;text-align:center;"><i class="fas fa-cloud-upload-alt" style="font-size:2rem;color:var(--azure);margin-bottom:1rem;display:block;"></i><h4 style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;margin-bottom:.5rem;">Client Handover</h4><p style="font-size:.8rem;color:var(--grey-light);">Sites prepared, linked to domains, production-ready.</p></div></div><div class="refrain-block"><span class="refrain-line">And still we sleep.</span><span class="refrain-line">And still we pray.</span><span class="refrain-line">And still we fear.</span></div></div></div>
+
+<div class="slide" id="s12"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Systems &amp; Code</div><h2 class="slide-title">Technical Contributions</h2><div class="silver-rule"></div><div class="g3" style="gap:1rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="hl"><i class="fas fa-bug" style="color:var(--azure);margin-bottom:.6rem;font-size:1.2rem;display:block;"></i><strong style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;">Blog Debugging</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">Debugged &amp; improved blog functionality across sites.</p></div><div class="hl"><i class="fas fa-tachometer-alt" style="color:var(--azure);margin-bottom:.6rem;font-size:1.2rem;display:block;"></i><strong style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;">Admin Dashboards</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">Custom admin &amp; dashboard features for content management.</p></div><div class="hl"><i class="fas fa-plug" style="color:var(--azure);margin-bottom:.6rem;font-size:1.2rem;display:block;"></i><strong style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;">Integrations</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">Forms, APIs &amp; downloadable asset pipelines.</p></div><div class="hl span3" style="border-left:2px solid var(--azure);"><div style="display:flex;gap:1rem;align-items:flex-start;"><i class="fas fa-network-wired" style="color:var(--azure);font-size:1.5rem;flex-shrink:0;margin-top:.1rem;"></i><div><strong style="font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.12em;">ENS Intranet System Architecture</strong><p style="font-size:.8rem;color:var(--grey-light);margin-top:.3rem;">Mapped user roles, structure &amp; full data flow for the ENS internal platform.</p></div></div></div></div><div class="poem-block"><div class="poem-text">"While others were <em>hoping for the future</em>, I was architecting it — one system at a time."</div></div></div></div>
+
+<div class="slide" id="s13"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Data Solutions</div><h2 class="slide-title">Systems &amp; Data Work</h2><div class="silver-rule"></div><div class="g3" style="gap:1rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="gc" style="padding:1.8rem;"><div style="width:38px;height:38px;background:rgba(34,114,204,.12);border:1px solid rgba(34,114,204,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;"><i class="fas fa-water" style="color:var(--azure);"></i></div><h4 style="font-family:'Playfair Display',serif;margin-bottom:.6rem;font-size:1.05rem;">Rand Water Survey</h4><p style="font-size:.8rem;color:var(--grey-light);">Fully digital survey system for Rand Water's data collection.</p></div><div class="gc" style="padding:1.8rem;"><div style="width:38px;height:38px;background:rgba(34,114,204,.12);border:1px solid rgba(34,114,204,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;"><i class="fas fa-database" style="color:var(--azure);"></i></div><h4 style="font-family:'Playfair Display',serif;margin-bottom:.6rem;font-size:1.05rem;">Data Capture Workflows</h4><p style="font-size:.8rem;color:var(--grey-light);">Data capture systems with automated database reporting.</p></div><div class="gc" style="padding:1.8rem;"><div style="width:38px;height:38px;background:rgba(34,114,204,.12);border:1px solid rgba(34,114,204,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;"><i class="fas fa-chart-pie" style="color:var(--azure);"></i></div><h4 style="font-family:'Playfair Display',serif;margin-bottom:.6rem;font-size:1.05rem;">Anglo American Zimele</h4><p style="font-size:.8rem;color:var(--grey-light);">SME tracking dashboards — real-time performance insights.</p></div></div><div class="poem-block"><div class="poem-text">"<em>Salvation is in our hands</em> — and I used mine. Databases, surveys, dashboards — built while others dreamed."</div></div></div></div>
+
+<div class="slide" id="s14"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Added Value</div><h2 class="slide-title">Additional Value Delivered</h2><div class="silver-rule"></div><div class="g2" style="margin-bottom:1.2rem;gap:1.2rem;"><div class="gc" style="padding:1.6rem;"><ul class="ck"><li><i class="fas fa-handshake"></i>Rand Water meeting — notes &amp; Drop by Drop 2.0 alignment</li><li><i class="fas fa-chart-line"></i>Dell Marketplace MVP &amp; Rand Water App MVP</li><li><i class="fas fa-poll"></i>Digital survey system + database reporting built</li><li><i class="fas fa-envelope"></i>Sent pitches to external producers (Bra Sam outreach)</li></ul></div><div class="gc gc-bright" style="padding:1.6rem;"><div style="display:flex;gap:.6rem;align-items:center;margin-bottom:.8rem;"><i class="fas fa-calendar-check" style="color:var(--azure);"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.15em;">RAND WATER STRATEGIC MEETING</strong></div><p style="font-size:.84rem;color:rgba(182,212,240,.75);line-height:1.75;">Captured detailed notes, supported team alignment for Drop by Drop 2.0. Went beyond the brief — as always.</p></div></div><div class="gc" style="padding:1.5rem;margin-bottom:1rem;"><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;"><i class="fab fa-whatsapp" style="color:#25D366;font-size:1.2rem;"></i><span style="font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.25em;">SENT PITCHES TO EXTERNAL PRODUCERS</span></div><div class="g3" id="pitchesGrid" style="gap:1rem;"></div></div><div class="poem-block"><div class="poem-text">"The calling was clear. I <em>heeded it</em>. I showed up, I contributed, I expanded beyond what was asked."</div></div></div></div>
+
+<div class="slide" id="s15"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Agility &amp; Process</div><h2 class="slide-title">Process Improvements</h2><div class="silver-rule"></div><div class="g2" style="gap:1.2rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="gc" style="padding:1.8rem;"><div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;"><i class="fab fa-trello" style="font-size:1.5rem;color:var(--azure);"></i><h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;">Trello Workflow System</h3></div><ul class="ck"><li><i class="fas fa-columns"></i>Structured boards with clear task categories</li><li><i class="fas fa-tasks"></i>Pipelines from brief to delivery</li><li><i class="fas fa-eye"></i>Improved team visibility on all active work</li><li><i class="fas fa-users-gear"></i>Enhanced coordination &amp; handoff efficiency</li></ul></div><div style="display:flex;flex-direction:column;gap:1rem;"><div class="gc gc-bright" style="padding:1.8rem;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.8rem;"><i class="fas fa-rocket" style="font-size:2.5rem;color:var(--azure);"></i><p class="body-text" style="font-size:.9rem;">Structural improvements reduced friction, increased output quality, and strengthened team trust.</p><div class="tag"><i class="fas fa-arrow-trend-up"></i>Coordination Improved</div></div><div class="poem-block"><div class="poem-text">"We are <em>running from the battle</em> — but I ran toward it. Every system, every board, every deadline."</div></div></div></div></div></div>
+
+<div class="slide" id="s16"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Outreach &amp; Growth</div><h2 class="slide-title">Business Development</h2><div class="silver-rule"></div><div class="g3" style="gap:1rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="gc" style="padding:1.8rem;text-align:center;"><i class="fas fa-paper-plane" style="font-size:2rem;color:var(--azure);margin-bottom:1rem;display:block;"></i><h4 style="font-family:'Playfair Display',serif;margin-bottom:.6rem;font-size:1.05rem;">Producer Pitches</h4><p style="font-size:.8rem;color:var(--grey-light);">Tailored pitches sent to external producers — new doors opened.</p></div><div class="gc" style="padding:1.8rem;text-align:center;"><i class="fas fa-chart-line" style="font-size:2rem;color:var(--silver);margin-bottom:1rem;display:block;"></i><h4 style="font-family:'Playfair Display',serif;margin-bottom:.6rem;font-size:1.05rem;">New Opportunities</h4><p style="font-size:.8rem;color:var(--grey-light);">Explored collaboration beyond the current client scope.</p></div><div class="gc" style="padding:1.8rem;text-align:center;"><i class="fas fa-network-wired" style="font-size:2rem;color:var(--azure);margin-bottom:1rem;display:block;"></i><h4 style="font-family:'Playfair Display',serif;margin-bottom:.6rem;font-size:1.05rem;">Network Growth</h4><p style="font-size:.8rem;color:var(--grey-light);">Professional network expanded — creative &amp; technology sectors.</p></div></div><div class="poem-block"><div class="poem-text">"<em>The new day is here already.</em> And I am already in it — building, pitching, growing, contributing."</div></div></div></div>
+
+<div class="slide" id="s17"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Resilience &amp; Output</div><h2 class="slide-title">Performance Summary</h2><div class="silver-rule"></div><div class="gc" style="padding:2rem;margin-bottom:1.2rem;"><p class="body-text">Consistently delivered under pressure — balancing development, systems, collaboration, and pro bono contributions. Maintained high productivity despite Bidvest priority shifts and tight timelines throughout March.</p></div><div class="g3" style="gap:1rem;margin-bottom:1.2rem;"><div class="hl" style="text-align:center;"><span class="stat-num" style="font-size:2rem;">27</span><span class="stat-lbl">Websites</span></div><div class="hl" style="text-align:center;"><span class="stat-num" style="font-size:2rem;">20</span><span class="stat-lbl">Logos</span></div><div class="hl" style="text-align:center;"><span class="stat-num" style="font-size:2rem;">5+</span><span class="stat-lbl">Systems</span></div></div><div class="refrain-block"><span class="refrain-line">And still we sleep.</span><span class="refrain-line">And still we pray.</span><span class="refrain-line">And still we fear.</span></div></div></div>
+
+<div class="slide" id="s18"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Adaptation</div><h2 class="slide-title">Challenges &amp; Response</h2><div class="silver-rule"></div><div class="g2" style="gap:1rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="gc" style="padding:1.5rem;border-left:2px solid rgba(255,140,60,.3);"><i class="fas fa-exclamation-triangle" style="color:rgba(255,160,80,.65);margin-bottom:.6rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;">Project Interruptions</strong><p style="font-size:.8rem;color:var(--grey-light);margin-top:.4rem;">Bidvest priority shift required rapid context-switching without sacrificing quality.</p></div><div class="gc" style="padding:1.5rem;border-left:2px solid rgba(255,140,60,.3);"><i class="fas fa-clock" style="color:rgba(255,160,80,.65);margin-bottom:.6rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.1em;">High Output Expectations</strong><p style="font-size:.8rem;color:var(--grey-light);margin-top:.4rem;">Tight deadlines across multiple simultaneous deliverables.</p></div></div><div class="banner" style="border-left:2px solid var(--azure);margin-bottom:1rem;"><i class="fas fa-bolt" style="color:var(--azure);font-size:1.5rem;flex-shrink:0;"></i><div><strong style="font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.15em;">RESPONSE</strong><p style="font-size:.82rem;color:var(--grey-light);margin-top:.25rem;">Adapted, re-prioritised, communicated proactively, and maintained delivery momentum throughout.</p></div></div><div class="poem-block"><div class="poem-text">"It is a battle that <em>must be fought</em> — and I fought it. Every morning. Every deadline. Every time."</div></div></div></div>
+
+<div class="slide" id="s19"><div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div><div class="section-inner"><div class="eyebrow">Milestones</div><h2 class="slide-title">Key Achievements</h2><div class="silver-rule"></div><div class="g3" style="gap:1rem;margin-top:1rem;margin-bottom:1.2rem;"><div class="hl"><i class="fas fa-check-circle" style="color:var(--azure);margin-bottom:.5rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">27 WEBSITES · 20 LOGOS</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">Full KPI achieved. 100% completion rate.</p></div><div class="hl"><i class="fas fa-trophy" style="color:var(--azure);margin-bottom:.5rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">3 BIDVEST WEBSITES</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">Delivered and presented to stakeholders.</p></div><div class="hl"><i class="fas fa-microphone" style="color:var(--azure);margin-bottom:.5rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">STAKEHOLDER PRESENTATION</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">Represented Brandscapers Africa with confidence.</p></div><div class="hl"><i class="fas fa-heart" style="color:var(--azure);margin-bottom:.5rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">PRO BONO WEBSITE</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">3K Auto Body — value beyond the brief.</p></div><div class="hl"><i class="fas fa-database" style="color:var(--azure);margin-bottom:.5rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">SYSTEMS &amp; DASHBOARDS</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">Rand Water, Anglo American, ENS Intranet.</p></div><div class="hl"><i class="fas fa-lightbulb" style="color:var(--azure);margin-bottom:.5rem;display:block;font-size:1.2rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">STRATEGIC CONTRIBUTIONS</strong><p style="font-size:.78rem;color:var(--grey-light);margin-top:.3rem;">MVPs, pitches, meeting notes, architecture.</p></div></div><div class="poem-block"><div class="poem-text" style="text-align:center;">"I did not sleep. I did not pray for someone else to build it. I <em>built it myself.</em>"</div></div></div></div>
+
+<!-- S20 CLOSING -->
+<div class="slide" id="s20">
+  <div class="bk-wrap"><div class="bk bk-tl"></div><div class="bk bk-tr"></div><div class="bk bk-bl"></div><div class="bk bk-br"></div></div>
+  <div class="section-inner" style="display:flex;flex-direction:column;justify-content:center;min-height:90vh;gap:1.5rem;">
+    <div class="eyebrow">Closing</div><h2 class="slide-title">And Still We Sleep.</h2><div class="silver-rule"></div>
+    <div style="text-align:center;padding:3rem 2rem;background:linear-gradient(145deg,rgba(4,15,30,.9),rgba(10,31,56,.5));border:1px solid var(--g-border);border-top:1px solid rgba(90,181,240,.3);border-radius:18px;position:relative;overflow:hidden;margin-bottom:.5rem;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(34,114,204,.08),transparent 65%);pointer-events:none;"></div>
+      <div style="font-family:'Cinzel',serif;font-size:clamp(.85rem,1.4vw,1.05rem);font-style:italic;font-weight:300;color:rgba(182,212,240,.5);letter-spacing:.2em;margin-bottom:1.5rem;">THE POEM · IN FULL</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.8vw,1.3rem);font-style:italic;font-weight:300;line-height:2.2;color:rgba(214,234,255,.72);max-width:600px;margin:0 auto 2rem;">
+        "And still we sleep.<br>And still we pray.<br>And still we fear.<br>
+        <span style="color:rgba(90,181,240,.9);font-size:120%;">And still we sleep."</span>
+      </div>
+      <div style="position:relative;width:90px;height:90px;margin:0 auto 1.2rem;">
+        <div style="position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg,rgba(34,114,204,.8),rgba(214,234,255,1),rgba(90,181,240,.8),rgba(34,114,204,.8));animation:spin 7s linear infinite;"></div>
+        <div style="position:absolute;inset:2px;border-radius:50%;background:#040f1e;"></div>
+        <!-- ╔══════════════════════════════════════════════╗
+             ║  CLOSING PORTRAIT (spinning ring)           ║
+             ║  Replace: ./your-photo.jpg                  ║
+             ╚══════════════════════════════════════════════╝ -->
+        <img src="./your-photo.jpg"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face'"
+             style="position:absolute;inset:4px;border-radius:50%;object-fit:cover;object-position:center top;width:calc(100% - 8px);height:calc(100% - 8px);">
+      </div>
+      <div style="font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;letter-spacing:.15em;background:linear-gradient(135deg,var(--white),var(--ice));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">KHETHO MNGOMEZULU</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:.58rem;letter-spacing:.4em;color:var(--grey-light);margin-top:.35rem;">BRANDSCAPERS AFRICA · MARCH 2026 · FINAL KPI REPORT</div>
+      <div style="margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--g-border);"><div style="font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,1.5vw,1.15rem);font-style:italic;color:rgba(214,234,255,.75);line-height:1.9;max-width:600px;margin:0 auto;">"March was not a dream. It was a decision — to show up, build, deliver, and lead. I made that decision. Every. Single. Day."</div></div>
+    </div>
+    <div class="g2" style="gap:1rem;">
+      <div class="hl"><i class="fas fa-wrench" style="color:var(--azure);display:block;margin-bottom:.5rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">COMPLETE REMAINING REFINEMENTS</strong></div>
+      <div class="hl"><i class="fas fa-network-wired" style="color:var(--azure);display:block;margin-bottom:.5rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">ENS INTRANET DEVELOPMENT</strong></div>
+      <div class="hl"><i class="fas fa-expand-arrows-alt" style="color:var(--azure);display:block;margin-bottom:.5rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">IMPROVE SYSTEM SCALABILITY</strong></div>
+      <div class="hl"><i class="fas fa-code-branch" style="color:var(--azure);display:block;margin-bottom:.5rem;"></i><strong style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;">EXPAND TECHNICAL SYSTEM BUILDS</strong></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<script>
+/* ── BACKGROUND CANVAS ── */
+(function(){
+  const cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d');
+  let W,H;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  const STARS=Array.from({length:200},()=>({x:Math.random(),y:Math.random(),r:Math.random()*1.2+.2,a:Math.random()*.6+.1,sp:Math.random()*.006+.003,ph:Math.random()*Math.PI*2}));
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    const g=ctx.createRadialGradient(W*.7,H*.3,0,W*.7,H*.3,W*.7);
+    g.addColorStop(0,'rgba(22,64,104,0.18)');g.addColorStop(.5,'rgba(10,31,56,0.12)');g.addColorStop(1,'rgba(2,12,22,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    STARS.forEach(s=>{const a=s.a*(.4+.6*Math.sin(t*s.sp+s.ph));ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(182,212,240,${a})`;ctx.fill();});
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ── INTRO CANVAS ── */
+(function(){
+  const cv=document.getElementById('intro-canvas'),ctx=cv.getContext('2d');
+  let W,H;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  const pts=Array.from({length:80},()=>({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.3,a:Math.random()*.5+.1}));
+  let raf;
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach((p,i)=>{
+      pts.slice(i+1).forEach(q=>{const dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=`rgba(90,181,240,${.08*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke();}});
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(182,212,240,${p.a})`;ctx.fill();
+    });
+    raf=requestAnimationFrame(loop);
+  }
+  raf=requestAnimationFrame(loop);
+  window._stopIntro=()=>cancelAnimationFrame(raf);
+})();
+
+/* ── SPIN CSS ── */
+document.head.insertAdjacentHTML('beforeend','<style>@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}</style>');
+
+/* ── INTRO LAUNCH ── */
+function launchDeck(){
+  const el=document.getElementById('intro');
+  if(el.classList.contains('gone'))return;
+  el.classList.add('gone');
+  setTimeout(()=>{el.style.display='none';if(window._stopIntro)window._stopIntro();},1900);
+}
+document.getElementById('intro').addEventListener('click',launchDeck);
+document.getElementById('intro-cta').addEventListener('click',e=>{e.stopPropagation();launchDeck();});
+setTimeout(launchDeck,8500);
+
+/* ── LIGHTBOX ── */
+const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lb-img'),lbLbl=document.getElementById('lb-lbl');
+function openLb(src,lbl){lbImg.src=src;lbLbl.textContent=lbl;lb.classList.add('open');}
+function closeLb(){lb.classList.remove('open');setTimeout(()=>{lbImg.src='';},450);}
+document.getElementById('lb-close').addEventListener('click',closeLb);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+/* ════════════════════════════════════════════════════════════════
+   IMAGE DATA — CHANGE PATHS AND URLs HERE
+   ────────────────────────────────────────────────────────────────
+   For each entry:
+     label : displayed as the card title & in the lightbox
+     img   : path to your image file (relative to this HTML file)
+     url   : live website URL — opens when "Check Me Out" is clicked
+════════════════════════════════════════════════════════════════ */
+
+/* ── SLIDE 4 · WEBSITES ─────────────────────────────────────
+   Put your screenshot files in the /screenshots/ folder.
+   Rename this HTML file's folder however you like.
+   img path format: ./screenshots/YOUR-FILENAME.jpg
+   url: the actual live URL for each site
+──────────────────────────────────────────────────────────── */
+const WEBSITES = [
+  { label: 'Eboile Trading', img: './websites/eboile.png', url: 'https://eboile-trading.vercel.app/' },
+  { label: 'Reaikimela', img: './websites/reakimela.png', url: 'https://reakimela.vercel.app/' },
+  { label: 'Jay-Roman', img: './websites/jayroman.png', url: 'https://jay-roman-media.vercel.app/' },
+  { label: 'QML Solutions', img: './websites/qml.png', url: 'https://qml-solutions.vercel.app/' },
+  { label: 'Rise-Up', img: './websites/riseup.png  ', url: 'https://rise-up-rzwe.vercel.app/' },
+  { label: 'Latimo', img: './websites/latimo.png', url: 'https://latimo.vercel.app/' },
+  { label: 'BJB', img: './websites/bjb.png', url: 'https://bjb-solutions.vercel.app/' },
+  { label: 'Fortkopi', img: './websites/fortkopi.png', url: 'https://fortkopi-web.vercel.app/' },
+  { label: 'JNR Family', img: './websites/jnr family.png', url: 'https://jnr-family.vercel.app/' },
+  { label: 'Letaba', img: './websites/letaba.png', url: 'https://letaba-tyre-specialist.vercel.app/' },
+  { label: 'Mohaduba', img: './websites/mohaduba.png', url: 'https://mohaduba.vercel.app/' },
+  { label: 'OTE Hydraulics', img: './websites/ote-hydraulics.png', url: 'https://ote-hydraulics.vercel.app/' },
+  { label: 'Sekatebo', img: './websites/sekatebo.png', url: 'https://sekatebo.vercel.app/' },
+  { label: 'Tigers Eye', img: './websites/tigerseye.png', url: 'https://website14.co.za' },
+  { label: 'Refbee', img: './websites/refbee.png', url: 'https://refbee-web.vercel.app/' },
+  { label: 'Loropo', img: './websites/loropo.png', url: 'https://loropo-industries.vercel.app/' },
+  { label: 'Magaba', img: './websites/magaba.png', url: 'https://magabe-capitao.vercel.app/' },
+  { label: 'Sgedlembe', img: './websites/sgedlembe.png', url: 'https://sgedlembe-electronics.vercel.app/' },
+  { label: 'North Industry', img: './websites/north industry.png', url: 'https://north-industry.vercel.app/' },
+  { label: 'Osenotse', img: './websites/onenotse.png', url: 'https://osenotse-g-web.vercel.app/' },
+  { label: 'Bontle', img: './websites/bont;e.png', url: 'https://beauty-bontle.vercel.app/' },
+  { label: 'CK', img: './websites/ck.png', url: 'https://ck-ij.vercel.app/' },
+  { label: 'Boekomao', img: './websites/boekomao.png', url: 'https://boekomoa-web.vercel.app/' },
+  { label: 'Siphokazi', img: './websites/siphokazi.png', url: 'https://siphokazifunadngames.vercel.app/' },
+  { label: 'Zee Beauthopia', img: './websites/zeesbeauthopia.png', url: 'https://zee-s-beauthopia.vercel.app/' },
+  { label: 'Oscarboost', img: './websites/oscarboost.png', url: 'https://oscar-boost.vercel.app/' },
+  { label: 'BNMS', img: './websites/BNMS.png', url: 'https://bnms.vercel.app/a' },
+];
+
+/* ── SLIDE 5 · LOGOS ─────────────────────────────────────────
+   Put your logo files in the /logos/ folder.
+   PNG, JPG or SVG all work.
+   img path format: ./logos/YOUR-FILENAME.png
+   (no URL needed for logos — they just open in lightbox)
+──────────────────────────────────────────────────────────── */
+const LOGOS = [
+  { label: 'beautybontle', img: './logos/beautybontle.webp' },
+  { label: 'bnms', img: './logos/bnms.webp' },
+  { label: 'boemakoa', img: './logos/boemakoa.webp' },
+  { label: 'BOTRADE', img: './logos/BOTRADELOGO.webp' },
+  { label: 'CkIJ', img: './logos/ck.webp' },
+  { label: 'Fortkopi', img: './logos/fortkopilogo.webp' },
+  { label: 'Jay', img: './logos/jay.webp' },
+  { label: 'Latimo', img: './logos/latimoLogo.webp' },
+  { label: 'Letaba', img: './logos/LetabaTyreLogo.webp' },
+  { label: 'Loropo', img: './logos/loropo.webp' },
+  { label: 'Mohaduba', img: './logos/mohaduba.webp' },
+  { label: 'North Industry', img: './logos/northindustry.webp' },
+  { label: 'OscarBoost', img: './logos/OscarboostLogo.webp' },
+  { label: 'Osenotse', img: './logos/osenotselogo.webp' },
+  { label: 'OTE', img: './logos/ote.webp' },
+  { label: 'QML', img: './logos/qml.webp' },
+  { label: 'Reakimela', img: './logos/reakimela.webp' },
+  { label: 'Rise Up', img: './logos/riseUp.webp' },
+  { label: 'Sgedlembe', img: './logos/sgedlembe.webp' },
+  /*{ label: 'Logo 20', img: './logos/logo-20.png' },*/
+];
+
+/* ── SLIDE 6 · BIDVEST SITES ─────────────────────────────────
+   Put screenshots in /bidvest/ folder.
+──────────────────────────────────────────────────────────── */
+const BIDVEST = [
+  { label: 'Core Pipes', img: './bidvest/corepipes.png', url: 'https://core-pipes.vercel.app/' },
+  { label: 'CQC Business', img: './bidvest/cqc.png', url: 'https://cqc-commerce.vercel.app/' },
+  { label: 'Next Level Learning', img: './bidvest/nxtlvl.png', url: 'https://next-level-learning.vercel.app/portal.html' },
+];
+
+/* ── SLIDE 14 · WHATSAPP PITCHES ─────────────────────────────
+   Put pitch screenshots in /pitches/ folder.
+──────────────────────────────────────────────────────────── */
+const PITCHES = [
+  { label: 'WhatsApp Pitch 01', img: './pitches/pitch-01.jpg' },
+  { label: 'WhatsApp Pitch 02', img: './pitches/pitch-02.jpg' },
+  { label: 'WhatsApp Pitch 03', img: './pitches/pitch-03.jpg' },
+];
+
+/* ════════════════════════════════════════════════════════════════
+   END OF IMAGE DATA — do not edit below this line unless needed
+════════════════════════════════════════════════════════════════ */
+
+function fb(i,w,h){return `https://picsum.photos/id/${((i*17)+20)%200}/${w}/${h}`;}
+
+function buildSiteCard(s,i){
+  const card=document.createElement('div');card.className='site-card';
+  const img=document.createElement('img');img.src=s.img;img.alt=s.label;
+  img.onerror=function(){this.onerror=null;this.src=fb(i,600,450);};
+  const ov=document.createElement('div');ov.className='site-ov';
+  const nm=document.createElement('div');nm.className='site-name';nm.textContent=s.label.toUpperCase();
+  const btn=document.createElement('a');btn.className='check-btn';btn.href=s.url||'#';btn.target='_blank';btn.rel='noopener noreferrer';
+  btn.innerHTML='<i class="fas fa-arrow-up-right-from-square"></i> CHECK ME OUT';
+  btn.addEventListener('click',e=>e.stopPropagation());
+  ov.append(nm,btn);
+  const lbl=document.createElement('div');lbl.className='site-lbl';lbl.textContent=s.label;
+  card.append(img,ov,lbl);
+  card.addEventListener('click',()=>openLb(img.src,s.label));
+  return card;
+}
+
+const wg=document.getElementById('websiteGrid');
+WEBSITES.forEach((s,i)=>wg.appendChild(buildSiteCard(s,i)));
+
+const lg=document.getElementById('logoGrid');
+LOGOS.forEach((l,i)=>{
+  const card=document.createElement('div');card.className='logo-card';
+  const img=document.createElement('img');img.src=l.img;img.alt=l.label;
+  img.onerror=function(){this.onerror=null;this.src=fb(i+80,400,400);};
+  const ov=document.createElement('div');ov.className='logo-ov';
+  const ex=document.createElement('div');ex.className='logo-ex';ex.textContent='VIEW';
+  ov.appendChild(ex);card.append(img,ov);
+  card.addEventListener('click',()=>openLb(img.src,l.label));
+  lg.appendChild(card);
+});
+
+const bg=document.getElementById('bidvestGrid');
+BIDVEST.forEach((s,i)=>bg.appendChild(buildSiteCard(s,i+100)));
+
+const pg=document.getElementById('pitchesGrid');
+PITCHES.forEach((p,i)=>{
+  const card=document.createElement('div');card.className='pitch-card';
+  const img=document.createElement('img');img.src=p.img;img.alt=p.label;
+  img.onerror=function(){this.onerror=null;this.src=fb(i+170,400,533);};
+  const ov=document.createElement('div');ov.className='pitch-ov';
+  const ex=document.createElement('div');ex.className='pitch-ex';ex.textContent='VIEW PITCH';
+  ov.appendChild(ex);card.append(img,ov);
+  card.addEventListener('click',()=>openLb(img.src,p.label));
+  pg.appendChild(card);
+});
+
+/* ── NAVIGATION ── */
+const slides=document.querySelectorAll('.slide'),N=slides.length;
+let cur=0;
+const dotsEl=document.getElementById('dots'),progressEl=document.getElementById('progress'),counterEl=document.getElementById('hud-top-right');
+function pad(n){return String(n).padStart(2,'0');}
+function buildDots(){for(let i=0;i<N;i++){const d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.addEventListener('click',()=>go(i));dotsEl.appendChild(d);}}
+function go(idx){
+  if(idx===cur)return;
+  slides[cur].classList.remove('active');slides[cur].classList.add('exit');dotsEl.children[cur].classList.remove('on');
+  cur=(idx+N)%N;
+  setTimeout(()=>{slides.forEach(s=>s.classList.remove('exit'));slides[cur].classList.add('active');slides[cur].scrollTop=0;},80);
+  dotsEl.children[cur].classList.add('on');
+  progressEl.style.width=((cur+1)/N*100)+'%';
+  counterEl.textContent=pad(cur+1)+' / '+pad(N);
+}
+buildDots();progressEl.style.width=(1/N*100)+'%';
+document.getElementById('nextBtn').addEventListener('click',()=>go(cur+1));
+document.getElementById('prevBtn').addEventListener('click',()=>go(cur-1));
+window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{const dx=tx-e.changedTouches[0].screenX;if(Math.abs(dx)>50)dx>0?go(cur+1):go(cur-1);},{passive:true});
+document.querySelectorAll('video').forEach(v=>v.play().catch(()=>{}));
+</script>
+</body>
+</html>
